@@ -1,3 +1,17 @@
+"""
+Track Surface Analysis
+Author: [Ines Alejandro Garcia Mosqueda]
+
+This script processes a dataset of geographical coordinates (latitude, longitude) and elevation data
+to create a matrix representation of a track surface. It includes functionality for converting
+geographical coordinates to meters, setting a wider track width, amplifying height differences,
+and adding margins to the matrix. The final matrix represents the surface of the track with
+height values and is saved to a CSV file.
+
+The script uses the Haversine formula to calculate distances, applies a ground tolerance value
+for areas without track data, and allows customization of track width and height amplification.
+"""
+
 import pandas as pd
 import numpy as np
 from scipy.ndimage import gaussian_filter
@@ -6,7 +20,17 @@ def haversine(lat1, lon1, lat2, lon2):
     """
     Calculate the great circle distance in meters between two points 
     on the earth (specified in decimal degrees).
+
+    Parameters:
+    lat1 (float): Latitude of the first point.
+    lon1 (float): Longitude of the first point.
+    lat2 (float): Latitude of the second point.
+    lon2 (float): Longitude of the second point.
+
+    Returns:
+    float: Distance between the two points in meters.
     """
+
     # Convert decimal degrees to radians 
     lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
     # Haversine formula 
@@ -20,6 +44,13 @@ def haversine(lat1, lon1, lat2, lon2):
 def set_track_width_height(matrix, track_width):
     """
     Set the height along the track width.
+
+    Parameters:
+    matrix (np.ndarray): Matrix representing the track surface.
+    track_width (int): Width of the track in matrix units.
+
+    Returns:
+    np.ndarray: Modified matrix with the track width set.
     """
     height_matrix = np.full_like(matrix, np.nan)
     rows, cols = matrix.shape
@@ -35,6 +66,13 @@ def set_track_width_height(matrix, track_width):
 def amplify_height_differences(matrix, amplification_factor):
     """
     Amplify the height differences in the matrix.
+
+    Parameters:
+    matrix (np.ndarray): Matrix representing the track surface.
+    amplification_factor (float): Factor by which to amplify height differences.
+
+    Returns:
+    np.ndarray: Matrix with amplified height differences.
     """
     min_height = np.nanmin(matrix)
     amplified_matrix = (matrix - min_height) * amplification_factor + min_height
