@@ -14,7 +14,8 @@ The track surface data is expected to be in a CSV file, typically named `TrackSu
 
 ## Visualization Examples
 ### 3D Surface Plot
-![Indy Track Visualization](plots/IndyTrack.png)
+![trackPlotIndi](https://github.com/Elyos-Research/SEM-Research/assets/84602829/69dc021b-6d7a-4004-ac64-ae83ca78055f)
+
 
 ### Thermal Plot (`heatMap_track.mlx`)
 The MATLAB script `heatMap_track.mlx` creates a thermal plot of the track, visualizing the elevation profile using latitude, longitude, and height data. 
